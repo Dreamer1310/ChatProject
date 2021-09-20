@@ -8,6 +8,7 @@ using System;
 using Microsoft.AspNetCore.DataProtection;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ChatPresentation.Models.DB;
 
 namespace ChatPresentation
 {
@@ -24,6 +25,7 @@ namespace ChatPresentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<ChatContext>();
             services
                 .AddDataProtection()
                 .SetApplicationName("ChatSenger Rocks!");
@@ -47,7 +49,6 @@ namespace ChatPresentation
                     options.Events.OnCreatingTicket = (context) =>
                     {
                         context.Identity.AddClaim(new Claim("picture", context.User.GetProperty("picture").GetString()));
-
                         return Task.CompletedTask;
                     };
                 })

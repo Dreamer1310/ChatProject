@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace SignalRDemo.Communication
 {
-    internal class ChatHub : Hub<IChatClient>
+    internal class ChatHub : Hub
     {
         public void Send(String user, String msg)
         {
             Console.WriteLine(user + " " + msg);
-            Clients.All.Send(user, msg);
+            //Clients.All.Send(user, msg);
         }
 
         public override Task OnConnectedAsync()
@@ -49,7 +49,7 @@ namespace SignalRDemo.Communication
                 if (user != null)
                 {
                     user.ConnectionID = Context.ConnectionId;
-                    user.Client = Clients.Caller;
+                    //user.Client = Clients.Caller;
                 }
                 else
                 {
@@ -57,14 +57,14 @@ namespace SignalRDemo.Communication
                     {
                         ID = ID,
                         Username = "SmokeChungas",
-                        Client = Clients.Caller,
+                        //Client = Clients.Caller,
                         ConnectionID = Context.ConnectionId
                     };
 
                     ChatManager.AddOnlineUser(newUser);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw new Exception("Incorrect User ID... ChatHub.OnConnectedAsync.HandleConnectedUser");
