@@ -7,7 +7,18 @@
 <h1>Log In</h1>
 
 <form action="/account/validate?returnUrl=@returnUrl" method="post">
-    <input type="text" name="username" placeholder="Username"/>
-    <input type="password" name="password" placeholder="Password"/>
+    <input type="text" name="username" placeholder="Username" />
+    <input type="password" name="password" placeholder="Password" />
     <input type="submit" value="Login" />
 </form>
+
+<br>
+<br>
+<input type="button"
+       value="Google"
+       onclick="location.href='@Url.Action("GoogleLogin", "Account")'" />
+<br>
+<br>
+<input type="button"
+       value="Facebook"
+       onclick="location.href='@Url.Action("FacebookLogin", "Account")'" />

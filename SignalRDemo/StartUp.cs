@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SignalRDemo.Communication;
 using System;
 
 namespace SignalRDemo
@@ -20,11 +22,15 @@ namespace SignalRDemo
             services.AddSignalR();
 
             services
+                .AddDataProtection()
+                .SetApplicationName("ChatSenger Rocks!");
+
+            services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/Account/Login";
-                    options.Cookie.Name = ".AspNetCore.Demo.Chat";
+                    options.Cookie.Name = ".AspNetCore.Demo.ChatSenger";
                     options.Cookie.HttpOnly = false;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                     options.SlidingExpiration = true;
@@ -32,27 +38,30 @@ namespace SignalRDemo
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOrigins",
+                options.AddDefaultPolicy(
                     builder =>
-                    {
-                        builder
-                        .AllowAnyOrigin()
+                    builder
+                        .WithOrigins("https://localhost:44342")
+                        //.AllowAnyOrigin()
                         .AllowAnyHeader()
-                        .AllowAnyMethod();
-                    });
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        //.Build()
+                    );
             });
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseCors();
             app.UseRouting();
 
-            app.UseEndpoints(ends =>
-            {
-                ends.MapHub<ChatHub>("/chatHub");
-            });
+            app.UseAuthentication();
 
-            app.UseCors("AllowAllOrigins");
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ChatHub>("/chatHub");
+            });
         }
         
     }

@@ -7,20 +7,26 @@
 <h1>Secured</h1>
 
 @section scripts {
-    <script src="~/aspnet/signalr/dist/browser/signalr.js"></script>
-    @*<script src="~/js/Secured.js"></script>*@
-
+    
     <script>
 
         $(document).ready(() => {
-
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl("https://localhost:5001/chatHub", {
-                    skipNegotiation: true,
                     transport: signalR.HttpTransportType.WebSockets
                 })
                 .configureLogging(signalR.LogLevel.Information)
                 .build();
+
+            connection.on("Send", (name, msg) => {
+                console.log(name + " " + msg);
+            });
+
+            connection
+                .start()
+                .then(() => {
+                    connection.invoke("Send", "Luka", "Hello!");
+                });
 
         });
 

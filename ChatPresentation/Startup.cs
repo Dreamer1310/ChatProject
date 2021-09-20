@@ -1,14 +1,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.DataProtection;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ChatPresentation
@@ -26,7 +24,9 @@ namespace ChatPresentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            services
+                .AddDataProtection()
+                .SetApplicationName("ChatSenger Rocks!");
 
 
             services
@@ -34,10 +34,36 @@ namespace ChatPresentation
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/Account/Login";
-                    options.Cookie.Name = ".AspNetCore.Demo.Chat";
+                    options.Cookie.Name = ".AspNetCore.Demo.ChatSenger";
                     options.Cookie.HttpOnly = false;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                     options.SlidingExpiration = true;
+                })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "995910646393-cmgi11sjdmkv89n09kltut0btej0ih49.apps.googleusercontent.com";
+                    options.ClientSecret = "AxhBDapuY5S2IXyz68Lwb3jU";
+                    options.Scope.Add("profile");
+                    options.Events.OnCreatingTicket = (context) =>
+                    {
+                        context.Identity.AddClaim(new Claim("picture", context.User.GetProperty("picture").GetString()));
+
+                        return Task.CompletedTask;
+                    };
+                })
+                .AddFacebook(options =>
+                {
+                    options.AppId = "400727738089956";
+                    options.AppSecret = "a57ddcadf631001dca2b2640f0115e01";
+                    options.Fields.Add("picture");
+                    options.Events.OnCreatingTicket = context =>
+                    {
+                        context.Identity.AddClaim(new Claim("picture", context.User.GetProperty("picture").GetProperty("data").GetProperty("url").ToString()));
+                        //var identity = (ClaimsIdentity)context.Principal.Identity;
+                        //var profileImg = context.User["picture"]["data"].Value<string>("url");
+                        //identity.AddClaim(new Claim(JwtClaimTypes.Picture, profileImg));
+                        return Task.CompletedTask;
+                    };
                 });
 
             //services.ConfigureApplicationCookie(opt =>
