@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SignalRDemo.Communication;
@@ -32,6 +33,8 @@ namespace SignalRDemo
                     options.LoginPath = "/Account/Login";
                     options.Cookie.Name = ".AspNetCore.Demo.ChatSenger";
                     options.Cookie.HttpOnly = false;
+                    options.Cookie.IsEssential = true;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                     options.SlidingExpiration = true;
                 });
@@ -41,7 +44,7 @@ namespace SignalRDemo
                 options.AddDefaultPolicy(
                     builder =>
                     builder
-                        .WithOrigins("https://localhost:44342")
+                        .WithOrigins("https://localhost:44342", "http://localhost:20001")
                         //.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod()
@@ -55,7 +58,6 @@ namespace SignalRDemo
         {
             app.UseCors();
             app.UseRouting();
-
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>

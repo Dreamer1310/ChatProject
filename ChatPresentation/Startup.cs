@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.DataProtection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ChatPresentation.Models.DB;
+using Microsoft.AspNetCore.Http;
 
 namespace ChatPresentation
 {
@@ -38,6 +39,8 @@ namespace ChatPresentation
                     options.LoginPath = "/Account/Login";
                     options.Cookie.Name = ".AspNetCore.Demo.ChatSenger";
                     options.Cookie.HttpOnly = false;
+                    options.Cookie.IsEssential = true;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                     options.SlidingExpiration = true;
                 })
@@ -60,18 +63,9 @@ namespace ChatPresentation
                     options.Events.OnCreatingTicket = context =>
                     {
                         context.Identity.AddClaim(new Claim("picture", context.User.GetProperty("picture").GetProperty("data").GetProperty("url").ToString()));
-                        //var identity = (ClaimsIdentity)context.Principal.Identity;
-                        //var profileImg = context.User["picture"]["data"].Value<string>("url");
-                        //identity.AddClaim(new Claim(JwtClaimTypes.Picture, profileImg));
                         return Task.CompletedTask;
                     };
                 });
-
-            //services.ConfigureApplicationCookie(opt =>
-            //{
-            //    opt.LoginPath = "/Account/Login";
-            //    opt.Cookie.Name = ".AspNetCore.Demo.Chat";
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,13 +75,6 @@ namespace ChatPresentation
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

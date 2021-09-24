@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31402.337
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRDemo", "SignalRDemo.csproj", "{C9AC03A4-48C3-42D8-BDD3-3FC4B21092D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalRDemo", "SignalRDemo.csproj", "{C9AC03A4-48C3-42D8-BDD3-3FC4B21092D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientSignalRDemo", "..\ClientSignalRDemo\ClientSignalRDemo.csproj", "{EEAB429B-3C71-4721-8088-B194C9B397D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatPresentation", "..\ChatPresentation\ChatPresentation.csproj", "{1E877581-FC19-4754-AAFE-16B578BDF9D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{C9AC03A4-48C3-42D8-BDD3-3FC4B21092D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9AC03A4-48C3-42D8-BDD3-3FC4B21092D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9AC03A4-48C3-42D8-BDD3-3FC4B21092D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEAB429B-3C71-4721-8088-B194C9B397D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEAB429B-3C71-4721-8088-B194C9B397D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEAB429B-3C71-4721-8088-B194C9B397D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEAB429B-3C71-4721-8088-B194C9B397D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E877581-FC19-4754-AAFE-16B578BDF9D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E877581-FC19-4754-AAFE-16B578BDF9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E877581-FC19-4754-AAFE-16B578BDF9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E877581-FC19-4754-AAFE-16B578BDF9D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

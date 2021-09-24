@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "SignalRDemo": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\Dreamer\\Desktop\\git Repos\\signalr\\ChatProject\\SignalRDemo\\bin\\Debug\\net5.0\\SignalRDemo.exe",
+      "commandLineArgs": "20002"
+    }
+  }
+}

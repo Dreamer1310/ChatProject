@@ -12,10 +12,10 @@
 
         $(document).ready(() => {
             const connection = new signalR.HubConnectionBuilder()
-                .withUrl("https://localhost:5001/chatHub", {
+                .withUrl("http://localhost:20002/chatHub", {
                     transport: signalR.HttpTransportType.WebSockets
                 })
-                .configureLogging(signalR.LogLevel.Information)
+                .configureLogging(signalR.LogLevel.Debug)
                 .build();
 
             connection.on("Send", (name, msg) => {
@@ -27,6 +27,9 @@
                 .then(() => {
                     connection.invoke("Send", "Luka", "Hello!");
                 });
+            //    .catch((error) => {
+            //        console.log(error);
+            //    });
 
         });
 
